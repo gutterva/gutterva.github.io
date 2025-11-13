@@ -15,16 +15,16 @@ document.addEventListener("DOMContentLoaded", () => {
     function getTileColor(letter, index){
         const isCorrectLetter = word.includes(letter)
         if (!isCorrectLetter){
-            return "rgba(203, 19, 19, 1)"
+            return "rgb(146, 72, 122)"
         }
 
         const letterInThatPosition = word.charAt(index)
         const isCorrectPosition = letter === letterInThatPosition
 
         if(isCorrectPosition){
-            return "rgba(49, 141, 39, 1)"
+            return "rgb(218, 73, 141)"
         }
-        return "rgba(219, 14, 185, 1)"
+        return "rgb(250, 198, 122)"
 
         
 
