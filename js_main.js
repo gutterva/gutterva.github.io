@@ -83,6 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         guessedWords.push([])
+        
 
     }
 
@@ -101,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function handleDeleteLetter(){
         const currentWordArr = getCurrentWordArr()
+        if (currentWordArr.length === 0) return;
         const removedLetter = currentWordArr.pop()
         guessedWords[guessedWords.length - 1] = currentWordArr
         const lastLetterEl = document.getElementById(String(availableSpace-1))
@@ -129,6 +131,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         
     }
+        document.addEventListener("keydown", (event) => {
+        const key = event.key.toLowerCase();
+
+        if (key === "enter") {
+            handleSubmitWord();
+            return;
+        }
+
+        if (key === "backspace") {
+            handleDeleteLetter();
+            return;
+        }
+
+        if (key.length === 1 && key >= "a" && key <= "z") {
+            updateGuessedWords(key);
+        }
+    });
+
+
 
 
 });
