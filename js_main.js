@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let guessedWords = [[]];
     let availableSpace = 1;
-    let word = "choose"; // correct word
+    let word = "pleads"; 
     let guessedWordCount = 0;
 
     const keys = document.querySelectorAll(".keyboard-row button");
@@ -75,9 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateKittyPosition();
     });
 
-    /* ----------------------------------------------------------
-       FIXED WORDLE-STYLE LOGIC (GREEN / YELLOW / GREY)
-    ---------------------------------------------------------- */
+ 
     function evaluateGuessRow(guess, word) {
         const result = Array(guess.length).fill("grey");
         const remaining = {};
@@ -86,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
             remaining[letter] = (remaining[letter] || 0) + 1;
         }
 
-        // Step 1: Mark GREENS
+    
         for (let i = 0; i < guess.length; i++) {
             if (guess[i] === word[i]) {
                 result[i] = "green";
@@ -94,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        // Step 2: Mark YELLOWS
+  
         for (let i = 0; i < guess.length; i++) {
             if (result[i] === "green") continue;
 
@@ -254,3 +252,4 @@ document.addEventListener("DOMContentLoaded", () => {
         popup.style.display = "none";
     });
 });
+
