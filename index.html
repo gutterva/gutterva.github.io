@@ -4,27 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordle Clone!</title>
-    <script src="js_main.js"></script>
-    <link rel="stylesheet" href="css_styles.css"/>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
+    <script src="js_main.js"></script>
+    <link rel="stylesheet" href="css_styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>
-    
+    <div id="legend-box" class="animate__animated animate__fadeInRight">
+        <h3>Color Guide</h3>
+        <p><span class="legend-box-color correct-pos"></span> Correct letter, correct spot</p>
+        <p><span class="legend-box-color wrong-pos"></span> Correct letter, wrong spot</p>
+        <p><span class="legend-box-color not-in-word"></span> Not in the word</p>
+        
+    </div>
+
     <div id="container">
-        <img id="sleeping" src="kitty_eepy.gif" width="100" height="100">
-        <img id="cake" src="cake.gif" width="100" height="100">
-        <img id="yapping" src="kitty_yap.gif" width="100" height="100">
         <div id="game">
-            <header>
+            <header class="title-wrapper">
+                <img src="cake.gif" class="cake-img left-cake">
                 <h1 class="title">WORDLE</h1>
+                <img src="cake.gif" class="cake-img right-cake">
             </header>
+            
             <div id="board-container">
                 <div id="board"></div>
             </div>
+
             <div id="keyboard-container">
                 <div class="keyboard-row">
                     <button data-key="q">q</button>
@@ -38,6 +44,7 @@
                     <button data-key="o">o</button>
                     <button data-key="p">p</button>
                 </div>
+
                 <div class="keyboard-row">
                     <div class="spacer-half"></div>
                     <button data-key="a">a</button>
@@ -51,6 +58,7 @@
                     <button data-key="l">l</button>
                     <div class="spacer-half"></div>
                 </div>
+
                 <div class="keyboard-row">
                     <button data-key="enter" class="wide-button">Enter</button>
                     <button data-key="z">z</button>
@@ -65,9 +73,35 @@
             </div>
         </div>
     </div>
+
+    <div id="guide-popup" class="hidden-popup">
+    <div class="popup-content animate__animated animate__fadeInDown">
+        <h2>Welcome!</h2>
+        <p>Make sure to check the color guide on the right side</p>
+        <button id="popup-ok">Got it!</button>
+    </div>
     
-    
-    
+
+    </div>
+    <div id="length-popup" class="hidden-popup">
+        <div class="popup-content animate__animated animate__headShake">
+            <p>Its a 6 letter word smartass cmon</p>
+            <button id="length-ok">ok</button>
+        </div>
+    </div>
+    <div id="fail-popup" class="hidden-popup">
+        <div class="popup-content animate__animated animate__fadeInDown">
+            <p>Dumbass now you have to wake the sleepy kitty up!</p>
+            <button id="fail-ok">ok :(</button>
+        </div>
+    </div>
+    <div id="win-popup" class="hidden-popup">
+        <div class="popup-content animate__animated animate__fadeInDown">
+            <p>Congrats! You are the GOAT at WORDLE!</p>
+            <button id="win-ok">i know</button>
+        </div>
+    </div>
+
+
 </body>
 </html>
-
