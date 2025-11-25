@@ -3,14 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let guessedWords = [[]];
     let availableSpace = 1;
-    let word = "dhruva";
+    let word = "choose"; // correct word
     let guessedWordCount = 0;
 
     const keys = document.querySelectorAll(".keyboard-row button");
 
     const totalRows = 6;   
     const kittySize = 80;  
-
 
     const cursorKitty = document.createElement("img");
     cursorKitty.src = "kitty_yap.gif";
@@ -37,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateKittyPosition(); 
-
 
     const sleepingKitty = document.createElement("img");
     sleepingKitty.src = "kitty_eepy.gif";
@@ -77,14 +75,37 @@ document.addEventListener("DOMContentLoaded", () => {
         updateKittyPosition();
     });
 
+    /* ----------------------------------------------------------
+       FIXED WORDLE-STYLE LOGIC (GREEN / YELLOW / GREY)
+    ---------------------------------------------------------- */
+    function evaluateGuessRow(guess, word) {
+        const result = Array(guess.length).fill("grey");
+        const remaining = {};
 
-    function getTileColor(letter, index, letterUseCount) {
-        if (!word.includes(letter)) return "rgb(146, 72, 122)";
-        if (word[index] === letter) return "rgb(218, 73, 141)";
-        const totalInWord = word.split(letter).length - 1;
-        if (letterUseCount[letter] >= totalInWord) return "rgb(146, 72, 122)";
-        letterUseCount[letter] = (letterUseCount[letter] || 0) + 1;
-        return "rgb(250, 198, 122)";
+        for (const letter of word) {
+            remaining[letter] = (remaining[letter] || 0) + 1;
+        }
+
+        // Step 1: Mark GREENS
+        for (let i = 0; i < guess.length; i++) {
+            if (guess[i] === word[i]) {
+                result[i] = "green";
+                remaining[guess[i]]--;
+            }
+        }
+
+        // Step 2: Mark YELLOWS
+        for (let i = 0; i < guess.length; i++) {
+            if (result[i] === "green") continue;
+
+            const letter = guess[i];
+            if (remaining[letter] > 0) {
+                result[i] = "yellow";
+                remaining[letter]--;
+            }
+        }
+
+        return result;
     }
 
     function showCustomAlert(message) {
@@ -116,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function handleSubmitWord() {
         const currentWordArr = getCurrentWordArr();
+
         if (currentWordArr.length !== 6) {
             const lengthPopup = document.getElementById("length-popup");
             const lengthOk = document.getElementById("length-ok");
@@ -129,15 +151,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentWord = currentWordArr.join("");
         const firstLetterId = guessedWordCount * 6 + 1;
         const interval = 200;
-        const letterUseCount = {};
+
+        /* Use the new row evaluation */
+        const colors = evaluateGuessRow(currentWordArr, word);
 
         currentWordArr.forEach((letter, index) => {
             setTimeout(() => {
-                const tileColor = getTileColor(letter, index, letterUseCount);
                 const letterId = firstLetterId + index;
                 const letterEl = document.getElementById(letterId);
+
+                const color =
+                    colors[index] === "green"  ? "rgb(218, 73, 141)" :
+                    colors[index] === "yellow" ? "rgb(250, 198, 122)" :
+                                                 "rgb(146, 72, 122)";
+
                 letterEl.classList.add("animate__flipInX");
-                letterEl.style = `background-color: ${tileColor}; border-color: ${tileColor};`;
+                letterEl.style.backgroundColor = color;
+                letterEl.style.borderColor = color;
             }, interval * index);
         });
 
@@ -150,13 +180,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (isCorrect) {
             const winPopup = document.getElementById("win-popup");
-            const winOk = document.getElementById("win-ok")
+            const winOk = document.getElementById("win-ok");
             winPopup.style.display = "flex";
             winOk.onclick = () => {
                 window.location.href = "index2.html";
             };
             return;
-
         } else {
             cursorKitty.classList.remove("animate__bounce");
             cursorKitty.classList.add("animate__shakeX");
@@ -191,13 +220,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function handleDeleteLetter() {
         const currentWordArr = getCurrentWordArr();
         if (currentWordArr.length === 0) return;
+
         currentWordArr.pop();
         guessedWords[guessedWords.length - 1] = currentWordArr;
+
         const lastLetterEl = document.getElementById(String(availableSpace - 1));
         lastLetterEl.textContent = "";
         availableSpace -= 1;
     }
-
 
     keys.forEach(key => {
         key.onclick = ({ target }) => {
@@ -207,7 +237,6 @@ document.addEventListener("DOMContentLoaded", () => {
             updateGuessedWords(letter);
         };
     });
-
 
     document.addEventListener("keydown", (event) => {
         const key = event.key.toLowerCase();
@@ -224,7 +253,4 @@ document.addEventListener("DOMContentLoaded", () => {
     popupOk.addEventListener("click", () => {
         popup.style.display = "none";
     });
-
-    
-
 });
