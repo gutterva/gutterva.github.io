@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Clone!</title>
+    <script src="js_main.js"></script>  
+    <link rel="stylesheet" href="css_styles.css"/>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+
+<body>
+    <div id="container">
+        <img id="princess-kitty" src="white_princess_kitty.gif">
+    </div>
+
+    <div id="win-box">
+        <img id="win-cake" src="cake.gif">
+        <p id="birthday-message">
+            HAPPY BIRTHDAY DHRUVA!!!<br><br>
+            You are the bestest, smartest, cutest, hottest person in this whole world and I am so lucky to have you in my life!<br><br>
+            I love you sooo much 
+        </p>
+    </div>
+    
+    <div id="princess-popup" class="hidden-popup">
+        <div class="popup-content animate__animated animate__fadeInDown">
+            <p id="princess-text">
+                You are not what I wanted.<br><br>
+                You are so much more.<br>
+                You are more incredible<br>
+                than anything<br>
+                I could have ever imagined...<br><br>
+                and I am so grateful<br>
+                you are in my life.
+            </p>
+            <button id="princess-ok">:D</button>
+        </div>
+    </div> 
+
+    <script>
+        
+    document.addEventListener("DOMContentLoaded", () => {
+        const princessKitty = document.getElementById("princess-kitty");
+        const princessPopup = document.getElementById("princess-popup");
+        const princessOk = document.getElementById("princess-ok");
+        
+        princessKitty.addEventListener("click", () => {
+            princessPopup.style.display = "flex";
+        });
+
+        princessOk.addEventListener("click", () => {
+            princessPopup.style.display = "none";
+        });
+
+    });
+    </script>
+
+</body>
+</html>
